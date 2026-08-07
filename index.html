@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Super Chat</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #121212; color: white; margin: 0; padding: 20px; display: flex; flex-direction: column; height: 90vh; }
+        #chat-box { flex: 1; overflow-y: auto; border: 1px solid #333; padding: 15px; border-radius: 10px; background: #1e1e1e; margin-bottom: 10px; }
+        .msg { margin-bottom: 10px; padding: 8px 12px; border-radius: 8px; max-width: 80%; }
+        .user { background: #007bff; align-self: flex-end; margin-left: auto; }
+        .bot { background: #2d2d2d; align-self: flex-start; }
+        .input-box { display: flex; gap: 10px; }
+        input { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #222; color: white; }
+        button { padding: 12px 20px; border-radius: 8px; border: none; background: #28a745; color: white; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>🤖 AI Assistant (Gemini & Groq)</h2>
+    <div id="chat-box"></div>
+    <div class="input-box">
+        <input type="text" id="userInput" placeholder="Tanyakan sesuatu...">
+        <button onclick="sendMessage()">Kirim</button>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const chatBox = document.getElementById('chat-box');
+            if (!input.value.trim()) return;
+
+            const userText = input.value;
+            chatBox.innerHTML += `<div class="msg user">${userText}</div>`;
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const loadingMsg = document.createElement('div');
+            loadingMsg.className = 'msg bot';
+            loadingMsg.innerText = 'Sedang berpikir...';
+            chatBox.appendChild(loadingMsg);
+
+            try {
+                // Panggil backend / API
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userText })
+                });
+                const data = await res.json();
+                loadingMsg.innerText = data.reply || "Gagal mendapat respon.";
+            } catch (e) {
+                loadingMsg.innerText = "Error menghubungkan ke server.";
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
