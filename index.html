@@ -10,7 +10,7 @@
         html, body {
             height: 100%;
             overflow: hidden;
-            background: #000000; /* Hitam pekat murni sesuai EkaLauncher */
+            background: #000000; /* Hitam Pekat Murni */
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             color: #ffffff;
         }
@@ -32,22 +32,24 @@
             gap: 10px;
             font-size: 1.2rem;
             font-weight: bold;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1f1f1f;
             color: #0088ff; /* Cyber Blue Ekamatra */
             text-transform: uppercase;
             letter-spacing: 1px;
             flex-shrink: 0;
         }
 
-        /* Logo Kristal di Header */
+        /* PERBAIKAN LOGO: Menyatu dengan Latar Gelap (Menghilangkan Latar Putih) */
         header img.brand-logo {
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             object-fit: contain;
             border-radius: 50%;
-            box-shadow: 0 0 8px rgba(0, 136, 255, 0.5);
+            mix-blend-mode: screen; /* Trik CSS agar latar putih logo menyatu dengan warna hitam */
+            filter: contrast(110%);
         }
 
+        /* PERBAIKAN AREA CHAT BOX */
         #chat-box {
             flex: 1;
             overflow-y: auto;
@@ -55,7 +57,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            background: #050505;
+            background: #000000;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -74,7 +76,7 @@
             color: #ffffff;
             align-self: flex-end;
             border-bottom-right-radius: 2px;
-            box-shadow: 0 2px 8px rgba(0, 136, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 136, 255, 0.3);
         }
 
         /* Pesan AI (Ekamatra) */
@@ -86,41 +88,41 @@
             border: 1px solid #222222;
         }
 
+        /* PERBAIKAN KOTAK INPUT (Terlihat Jelas di Bagian Bawah) */
         .input-container {
-            padding: 12px;
+            padding: 12px 16px;
             background: #0a0a0a;
-            border-top: 1px solid #1a1a1a;
+            border-top: 1px solid #222222; /* Border pemisah yang tegas */
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex-shrink: 0;
         }
 
         input {
             flex: 1;
-            padding: 12px 14px;
+            padding: 12px 16px;
             border-radius: 10px;
-            border: 1px solid #262626;
+            border: 1px solid #333333;
             background: #121212;
             color: #ffffff;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
         }
 
         input:focus {
             border-color: #0088ff;
-            box-shadow: 0 0 6px rgba(0, 136, 255, 0.3);
+            box-shadow: 0 0 8px rgba(0, 136, 255, 0.4);
         }
 
         button {
             padding: 0 20px;
             background: #0088ff;
-            color: white;
+            color: #ffffff;
             border: none;
             border-radius: 10px;
             font-weight: bold;
             font-size: 0.95rem;
             cursor: pointer;
-            transition: background 0.2s;
         }
 
         button:active {
@@ -136,7 +138,9 @@
             <span>Ekamatra AI</span>
         </header>
 
-        <div id="chat-box"></div>
+        <div id="chat-box">
+            <div class="msg bot">Salam. Saya Ekamatra AI. Ada yang bisa saya bantu?</div>
+        </div>
 
         <div class="input-container">
             <input type="text" id="userInput" placeholder="Tanyakan sesuatu..." onkeypress="handleKeyPress(event)">
